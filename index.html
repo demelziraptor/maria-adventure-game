@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>KaKawww KaKawww</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>  
+  $(function() {
+      // add story order
+      var boxOrder = [];
+      $('.story div').each(function(){
+        boxOrder.push($(this).attr('id'));
+      });
+      // configure stats
+      var stats = {
+        'level': 0,
+        'bravery': 0,
+        'intelligence': 0,
+        'escapology': 0
+      }
+      function updateLevel(){
+        lvl = Math.floor((stats.bravery + stats.intelligence + stats.escapology) /10);
+        stats.level = lvl;
+        $('#stats-level').html(lvl);
+      }
+      // add events to divs
+      for (i=0; i < boxOrder.length; i++){
+        var currentDiv = '#'+boxOrder[i];
+        // hide current
+        $(currentDiv).hide();
+        $(currentDiv+ ' a').each(function(index){
+          $(this).click(function(e){
+            var currentDivName = $(this).closest('div').attr('id');
+            var currentDivIndex = $.inArray(currentDivName, boxOrder);
+            var currentDiv = '#'+currentDivName;
+            var nextDiv = '#'+boxOrder[currentDivIndex +1];
+            e.preventDefault();
+            $(currentDiv).hide();
+            $(nextDiv).show();
+            if(nextDiv == '#start'){
+              $('#stats').show();
+            }
+            if($(this).attr('data-bra')){
+              stats.bravery += parseInt($(this).attr('data-bra'));
+              stats.intelligence += parseInt($(this).attr('data-int'));
+              stats.escapology += parseInt($(this).attr('data-esc'));
+              updateLevel();
+              $('#stats span').each(function(index){
+                var name = $(this).attr('id').substring(5);
+                $(this).html(stats[name]);
+              });
+            }
+          });
+        });
+      }
+      // show first div
+      $('#'+boxOrder[0]).show();
+  });
+</script>
+<style>
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  color: #003300;
+}
+h1 {
+  margin: 
+}
+a, a:visited, a:active {
+  color: #009933;
+  text-decoration: none;
+}
+a:hover{
+  color: #00FF00;
+}
+img {
+  margin-top: 20px;
+}
+#stats {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  display: none;
+}
+#stats h3 {
+  margin: 5px 0;
+}
+#stats p {
+  margin: 0;
+}
+.story {
+  margin: 50px 150px 0 150px;
+}
+#content {
+  margin-right: 350px;
+}
+#third {
+  margin-left: -100px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="stats">
+  <audio controls loop>
+    <source src="letitgo.mp3" type="audio/mpeg">
+  </audio>
+  <div id="elsa-face">
+    <img src="elsa-face.jpg"/>
+    <h3>Marielsa</h3>
+    <p>
+      Bravery: <span id="stat-bravery">0</span><br>
+      Intelligence: <span id="stat-intelligence">0</span><br>
+      Escapology: <span id="stat-escapology">0</span><br>
+      <strong>Level: <span id="stat-level">0</span></strong>
+    </p>
+  </div>
+
+  <div id="anna-face">
+    <img src="anna-face.jpg"/>
+    <h3>Annapita</h3>
+    <p>(Invincible, as all good sidekicks are)</p>
+  </div>
+</div>
+
+<div id="beginning-div" class="story">
+
+  <div id="intro">
+    <h1>Dear Maria</h1>
+    <p>In this wintery month, and since it's your birthday and everything, I thought it would be a good idea to play a tiny cold-themed game...</p>
+    <p>Welcome to the Maria adventure game! :D</p>
+    <p><a href="#">Yes, let's do it!</a></p>
+    <p>(Important game information: refresh the page = restart the game)</p>
+    <img src="cake.jpg" />
+  </div>
+
+  <div id="char">
+    <h1>First</h1>
+    <p>Choose your character!</p>
+    <p><a href="#"><img src="elsa.jpg"/></a></p>
+    <p>(There is no need for other choices)</p>
+  </div>
+
+  <div id="side">
+    <h1>Second</h1>
+    <p>Choose your sidekick</p>
+    <p><a href="#"><img src="anna.jpg"/></a></p>
+    <p>(See previous comment)</p>
+  </div>
+
+</div><!-- end #beginning-div --> 
+<div id="content-div" class="story">
+
+  <div id="third">
+    <h1>Third</h1>
+    <p>Choose the worst cosplayer!</p>
+    <p>
+      <a href="#"><img style="padding-right: 25px;" src="cosplay3.jpg"/></a>
+      <a href="#"><img style="padding-right: 25px;" src="cosplay2.jpg"/></a>
+      <a href="#"><img src="cosplay1.jpg"/></a>
+    </p>
+    <p>(FYI, there is no point to this third round...)</p>
+  </div>
+
+  <div id="background">
+    <h1>Story background</h1>
+    <p>Once upon a time, in a very very cold land (probably far away), there lived a princess called Marielsa.  She had a younger sister Annapita, and together they lived in a tiny castle in the ancient kingdom of Vitacura, known locally as Arendelle.</p>
+    <p><a href="#">Yesyesyes, that's amazing, can we start now???</a></p>
+  </div>
+  
+  <div id="start">
+    <h1>LET'S START!  LEVEL 1!</h1>
+    <p>First, please start the music >>>>>>>>>>>>>>></p>
+    <p><a href="#">Yeeeeeeeeehhh</a></p>
+  </div>
+  
+  <div id="part1">
+    <h1>In the beginning</h1>
+    <p>One day, the two were travelling to the local supermarket to buy some icecream, WHEN A MOUNTAIN TROLL APPEARED!!! <img style="margin-top: 0px;" src="shock.png" /></p>
+    <p>What do you do?</p>
+    <ul>
+      <li><a href="#" data-int="1" data-bra="0" data-esc="2">Throw your sidekick at the troll and run away</a></li>
+      <li><a href="#" data-int="0" data-bra="3" data-esc="0">Run straight at the troll and attack!!!</a></li>
+      <li><a href="#" data-int="2" data-bra="1" data-esc="0">Throw your sidekick behind the troll, then attack him when he has his back turned!  Mwahahaha</a></li>
+    </ul>
+    <img style="margin-top: src="troll.jpg" />
+  </div>
+  
+  <div id="part2">
+    <h1>Hurray!</h1>
+    <p>You've overcome your trollish obstacle!  Congratulations!  You go to the supermarked and buy LOTS of icecream because you're all overheated from the troll encounter.</p>
+    <p><a href="#">Om nom nom nom nom...</a></p>
+    <img src="icecream.jpg" />
+  </div>
+  
+  <div id="part3">
+    <h1>"WAAAAIIT!  What do you think you're doing??!!?"</h1>
+    <p>Oh noes!  You had completely forgot, but it's illegal to eat icecream in such cold weather, and now this policegentleman is very unhappy! <img style="margin-top: 0px;" src="shock.png" /></p>
+    <p><a href="#">:( :( :(</a></p>
+    <img src="policeman.jpg" />
+  </div>
+  
+  <div id="part4">
+    <h1>Jailtime</h1>
+    <p>So, you're stuck in jail with your sidekick, but you have to be back at your castle in 1 hour or you're going to miss the latest episode of Game of Thrones!!!</p>
+    <p>What do you do?</p>
+    <ul>
+      <li><a href="#" data-int="0" data-bra="1" data-esc="2">Squeeze through the bars (because you're so tiny) and run away</a></li>
+      <li><a href="#" data-int="3" data-bra="0" data-esc="0">Call a friend to record GoT for you</a></li>
+      <li><a href="#" data-int="1" data-bra="0" data-esc="0">Bribe the guard with your icecream to let you out</a></li>
+    </ul>
+    <img src="jail.jpg" />
+  </div>
+  
+  <div id="part5">
+    <h1>Hurray!  GoT!</h1>
+    <p>What an amazing show!  It has dragons, and people fighting, and castles, and magic, and some other great things.  It's like a little square portal into a distant, non-icy world.</p>
+    <p><a href="#">Yeh man, this show is even better than Spongebob</a></p>
+    <img src="got.jpg" />
+  </div>
+  
+  <div id="part6">
+    <h1>Hey, did you say portal?</h1>
+    <p>For some reason, this time, it seems like a dragon is sticking his head out of your tv, and looking around...</p>
+    <p><a href="#">Errrr....oh noes????</a></p>
+    <img src="maria.jpg" />
+  </div>
+  
+  <div id="part7">
+    <h1>Dragon O_O</h1>
+    <p>The dragon decided that he found your castle intesting and has come out of the tv and is walking around, melting everything! Noooo, not the furry hats!</p>
+    <p>What will you do?</p>
+    <ul>
+      <li><a href="#" data-int="2" data-bra="1" data-esc="0">Play the Ice Bucket Challenge with him and scare him into running away</a></li>
+      <li><a href="#" data-int="3" data-bra="0" data-esc="0">Get your sidekick to cover herself with delicious completos and run out of the castle, getting the dragon to follow</a></li>
+      <li><a href="#" data-int="1" data-bra="0" data-esc="2">Run out of your castle and lock all the gates to keep the dragon inside, then set up a tourist attraction site to see the dragon and post videos of it destroying your castle on YouTube</a></li>
+    </ul>
+    <img src="dragon.jpg" />
+  </div>
+  
+  <div id="part8">
+    <h1>Congratulations!  Finished level 1</h1>
+    <p>Yep that's right!  I bet you're surprised that you made it this far, but you did good.</p>
+    <p>If you continue you will get your end-of-level stat bonus!</p>
+    <p><a href="#" data-int="2" data-bra="2" data-esc="2">Continue...</a></p>
+    <img src="level1.jpg" />
+  </div>
+  
+  <div id="level2">
+    <h1>Level 2 under construction</h1>
+    <p>Please be patient, there is a lot of mess to clean up first because of that dragon.</p>
+    <img src="cleaning.jpg" />
+  </div>
+    
+    
+</div><!-- end #content -->
+
+
+</body>
+</html>
