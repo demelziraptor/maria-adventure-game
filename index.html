@@ -17,15 +17,15 @@
         'intelligence': 0,
         'escapology': 0
       }
+      // calculate level
       function updateLevel(){
         lvl = Math.floor((stats.bravery + stats.intelligence + stats.escapology) /10);
         stats.level = lvl;
-        $('#stats-level').html(lvl);
       }
       // add events to divs
       for (i=0; i < boxOrder.length; i++){
         var currentDiv = '#'+boxOrder[i];
-        // hide current
+        // hide all at the beginning
         $(currentDiv).hide();
         $(currentDiv+ ' a').each(function(index){
           $(this).click(function(e){
@@ -36,9 +36,11 @@
             e.preventDefault();
             $(currentDiv).hide();
             $(nextDiv).show();
+            // start displaying stats at appropriate time
             if(nextDiv == '#start'){
               $('#stats').show();
             }
+            // update stats if a element has the attrs
             if($(this).attr('data-bra')){
               stats.bravery += parseInt($(this).attr('data-bra'));
               stats.intelligence += parseInt($(this).attr('data-int'));
@@ -52,7 +54,7 @@
           });
         });
       }
-      // show first div
+      // begin! show first part
       $('#'+boxOrder[0]).show();
   });
 </script>
